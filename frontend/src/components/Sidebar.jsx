@@ -114,7 +114,7 @@ export default function Sidebar({ isOpen, onClose }) {
         <div className="bg-white/5 rounded-xl px-3 py-2.5 flex items-center gap-2">
           <div className="w-2 h-2 bg-primary-400 rounded-full animate-pulse" />
           <p className="text-black/40 text-xs">System online</p>
-          <p className="text-black/20 text-xs ml-auto">v1.0</p>
+          <p className="text-black/20 text-xs ml-auto">©HR portal</p>
         </div>
       </div>
     </aside>

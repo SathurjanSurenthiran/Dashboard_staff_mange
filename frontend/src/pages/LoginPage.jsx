@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import ErrorMessage from '../components/ui/ErrorMessage'
 import SuccessToast from '../components/ui/SuccessToast'
 
-/* ─── Animated SVG Illustration ──────────────────────────────────────────── */
+/*  Animated SVG Illustration  */
 function HeroIllustration() {
   return (
     <svg viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-xs drop-shadow-2xl">
@@ -67,7 +67,7 @@ function HeroIllustration() {
   )
 }
 
-/* ─── Feature badge ───────────────────────────────────────────────────────── */
+/*  Feature badge  */
 function FeaturePill({ icon: Icon, text }) {
   return (
     <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-white/90">
@@ -77,7 +77,7 @@ function FeaturePill({ icon: Icon, text }) {
   )
 }
 
-/* ─── Page ────────────────────────────────────────────────────────────────── */
+/*  Page  */
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -108,7 +108,7 @@ export default function LoginPage() {
       {/* Success toast */}
       <SuccessToast message="Login successful! Welcome back 🎉" show={success} />
 
-      {/* ══════════════════ LEFT PANEL ══════════════════ */}
+      {/*  LEFT PANEL  */}
       <div
         className="hidden lg:flex lg:w-[55%] relative overflow-hidden flex-col items-center justify-center p-10"
         style={{
@@ -172,7 +172,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* ══════════════════ RIGHT PANEL (FORM) ══════════════════ */}
+      {/*  RIGHT PANEL (FORM)  */}
       <div className="flex-1 flex items-center justify-center p-6 lg:p-8">
         <div className="w-full max-w-sm">
 
@@ -282,24 +282,13 @@ export default function LoginPage() {
               </button>
             </form>
 
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-100" />
-              </div>
-              <div className="relative flex justify-center">
-                <span className="bg-white px-3 text-xs text-gray-400">New here?</span>
-              </div>
-            </div>
-
-            <Link
-              to="/register"
-              className="block w-full py-3 px-6 rounded-xl font-semibold text-sm text-center border-2
-                         transition-all duration-200 hover:bg-gray-50 active:scale-[0.98]"
-              style={{ borderColor: '#0d9488', color: '#0d9488' }}
-            >
-              Create an Account
-            </Link>
+            {/* Register link */}
+            <p className="text-center text-sm text-gray-400 mt-4">
+              If you don't have an account?{' '}
+              <Link to="/register" className="font-semibold" style={{ color: '#0d9488' }}>
+                Create an account
+              </Link>
+            </p>
           </div>
 
           {/* Footer note */}

@@ -5,7 +5,7 @@ import api from '../lib/axios'
 import ErrorMessage from '../components/ui/ErrorMessage'
 import SuccessToast from '../components/ui/SuccessToast'
 
-/* ─── Animated SVG Illustration ──────────────────────────────────────────── */
+/*  Animated SVG Illustration  */
 function RegisterIllustration() {
   return (
     <svg viewBox="0 0 420 380" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-xs drop-shadow-2xl">
@@ -60,7 +60,7 @@ function RegisterIllustration() {
   )
 }
 
-/* ─── Benefit item ────────────────────────────────────────────────────────── */
+/*  Benefit item  */
 function BenefitItem({ icon: Icon, title, desc }) {
   return (
     <div className="flex items-start gap-3">
@@ -76,7 +76,7 @@ function BenefitItem({ icon: Icon, title, desc }) {
   )
 }
 
-/* ─── Form field ──────────────────────────────────────────────────────────── */
+/*  Form field  */
 function FormField({ label, type, placeholder, value, onChange, icon }) {
   return (
     <div>
@@ -121,7 +121,7 @@ const LockIcon = () => (
   </svg>
 )
 
-/* ─── Page ────────────────────────────────────────────────────────────────── */
+/*  Page  */
 export default function RegisterPage() {
   const navigate = useNavigate()
   const [form, setForm]       = useState({ name: '', email: '', password: '', confirmPassword: '' })
@@ -158,7 +158,7 @@ export default function RegisterPage() {
       {/* Success toast */}
       <SuccessToast message="Account created successfully! Please sign in 🎉" show={success} />
 
-      {/* ══════════════════ LEFT PANEL ══════════════════ */}
+      {/*  LEFT PANEL  */}
       <div
         className="hidden lg:flex lg:w-[55%] relative overflow-hidden flex-col items-center justify-center p-10"
         style={{
@@ -222,7 +222,7 @@ export default function RegisterPage() {
         </div>
       </div>
 
-      {/* ══════════════════ RIGHT PANEL (FORM) ══════════════════ */}
+      {/*  RIGHT PANEL (FORM)  */}
       <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
         <div className="w-full max-w-sm">
 
@@ -248,7 +248,7 @@ export default function RegisterPage() {
               <FormField
                 label="Full Name"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Your name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 icon={<PersonIcon />}
@@ -256,7 +256,7 @@ export default function RegisterPage() {
               <FormField
                 label="Email Address"
                 type="email"
-                placeholder="admin@restaurant.com"
+                placeholder="example@gamil.com"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 icon={<MailIcon />}
@@ -308,24 +308,14 @@ export default function RegisterPage() {
               </button>
             </form>
 
-            {/* Divider */}
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-100" />
-              </div>
-              <div className="relative flex justify-center">
-                <span className="bg-white px-3 text-xs text-gray-400">Already have an account?</span>
-              </div>
-            </div>
+            {/* Sign in link */}
+            <p className="text-center text-sm text-gray-400 mt-4">
+              Already have an account?{' '}
+              <Link to="/login" className="font-semibold" style={{ color: '#0d9488' }}>
+                Sign in
+              </Link>
+            </p>
 
-            <Link
-              to="/login"
-              className="block w-full py-2.5 px-6 rounded-xl font-semibold text-sm text-center border-2
-                         transition-all duration-200 hover:bg-gray-50 active:scale-[0.98]"
-              style={{ borderColor: '#0d9488', color: '#0d9488' }}
-            >
-              Sign In Instead
-            </Link>
           </div>
 
           {/* Footer note */}

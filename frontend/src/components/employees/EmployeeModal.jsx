@@ -14,7 +14,7 @@ const DEFAULT_FORM = {
   position: '', salary: '', joining_date: '', status: 'active',
 }
 
-export default function EmployeeModal({ employee, onClose, onSaved }) {
+export default function EmployeeModal({ employee, onClose, onSaved, onError }) {
   const isEdit = !!employee
   const [form, setForm]       = useState(DEFAULT_FORM)
   const [loading, setLoading] = useState(false)
@@ -50,7 +50,9 @@ export default function EmployeeModal({ employee, onClose, onSaved }) {
       }
       onSaved()
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to save employee')
+      const msg = err.response?.data?.error || 'Failed to save employee'
+      setError(msg)
+      onError?.(msg)
     } finally {
       setLoading(false)
     }

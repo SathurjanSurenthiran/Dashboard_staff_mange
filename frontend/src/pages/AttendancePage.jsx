@@ -5,6 +5,7 @@ import LoadingSpinner from '../components/ui/LoadingSpinner'
 import ErrorMessage from '../components/ui/ErrorMessage'
 import Pagination from '../components/ui/Pagination'
 import ClockInModal from '../components/attendance/ClockInModal'
+import AlertToast from '../components/ui/AlertToast'
 
 function HoursBadge({ hours }) {
   if (hours == null) return <span className="badge-working">Active</span>
@@ -21,6 +22,12 @@ export default function AttendancePage() {
   const [dateFilter, setDateFilter] = useState('')
   const [modalOpen, setModalOpen]   = useState(false)
   const [clockingOut, setClockin]   = useState(null) // attendance ID being clocked out
+  const [toast, setToast]           = useState({ show: false, message: '', type: 'success' })
+
+  const showToast = (message, type = 'success') => {
+    setToast({ show: false, message, type })
+    setTimeout(() => setToast({ show: true, message, type }), 20)
+  }
 
   const fetchToday = useCallback(() =>
     api.get('/attendance/today').then(({ data }) => setToday(data.data || [])), [])
@@ -54,8 +61,10 @@ export default function AttendancePage() {
       await api.put(`/attendance/${id}/clock-out`, {})
       fetchToday()
       fetchAll()
+      showToast('Clocked out successfully ✅')
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to clock out')
+      showToast(err.response?.data?.error || 'Failed to clock out', 'error')
     } finally {
       setClockin(null)
     }
@@ -63,6 +72,7 @@ export default function AttendancePage() {
 
   return (
     <div className="space-y-6">
+      <AlertToast message={toast.message} type={toast.type} show={toast.show} />
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -188,7 +198,12 @@ export default function AttendancePage() {
       {modalOpen && (
         <ClockInModal
           onClose={() => setModalOpen(false)}
-          onSaved={() => { setModalOpen(false); fetchToday(); fetchAll() }}
+          onSaved={() => {
+            setModalOpen(false)
+            fetchToday()
+            fetchAll()
+            showToast('Clocked in successfully ✅')
+          }}
         />
       )}
     </div>

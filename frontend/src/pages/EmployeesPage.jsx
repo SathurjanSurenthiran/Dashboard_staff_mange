@@ -7,6 +7,7 @@ import ErrorMessage from '../components/ui/ErrorMessage'
 import ConfirmDialog from '../components/ui/ConfirmDialog'
 import Pagination from '../components/ui/Pagination'
 import EmployeeModal from '../components/employees/EmployeeModal'
+import AlertToast from '../components/ui/AlertToast'
 
 function StatusBadge({ status }) {
   return status === 'active'
@@ -27,6 +28,12 @@ export default function EmployeesPage() {
   const [editTarget, setEditTarget] = useState(null)
   const [deleteTarget, setDeleteTarget] = useState(null)
   const [deleting, setDeleting]     = useState(false)
+  const [toast, setToast]           = useState({ show: false, message: '', type: 'success' })
+
+  const showToast = (message, type = 'success') => {
+    setToast({ show: false, message, type })
+    setTimeout(() => setToast({ show: true, message, type }), 20)
+  }
 
   const fetchEmployees = useCallback(async () => {
     setLoading(true)
@@ -58,8 +65,10 @@ export default function EmployeesPage() {
       await api.delete(`/employees/${deleteTarget.id}`)
       setDeleteTarget(null)
       fetchEmployees()
+      showToast('Employee deleted successfully')
     } catch {
       setError('Failed to delete employee')
+      showToast('Failed to delete employee', 'error')
     } finally {
       setDeleting(false)
     }
@@ -67,6 +76,7 @@ export default function EmployeesPage() {
 
   return (
     <div className="space-y-6">
+      <AlertToast message={toast.message} type={toast.type} show={toast.show} />
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -176,7 +186,12 @@ export default function EmployeesPage() {
         <EmployeeModal
           employee={editTarget}
           onClose={() => setModalOpen(false)}
-          onSaved={() => { setModalOpen(false); fetchEmployees() }}
+          onSaved={() => {
+            setModalOpen(false)
+            fetchEmployees()
+            showToast(editTarget ? 'Employee updated successfully ✅' : 'Employee added successfully ✅')
+          }}
+          onError={(msg) => showToast(msg, 'error')}
         />
       )}
 
